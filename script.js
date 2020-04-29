@@ -1,4 +1,20 @@
 
+const createEl = (tag, text, attrs = {}) => {
+    const el = document.createElement(tag)
+    el.textContent = text
+    
+    Object.keys(attrs).forEach((key) => {
+        el.setAttribute(key, attrs[key])
+    })
+    return el
+}
+
+ 
+const fetchGetTaskList = () => {
+    return fetch(`${endpoint}/list`)
+        .then(response => response.json())
+}
+
 const fetchAddTask = (body) => {
     return fetch(`${endpoint}/add`, {
         method: 'POST',
@@ -7,6 +23,7 @@ const fetchAddTask = (body) => {
     })
 }
 
+ 
 const fetchEditTask = (id, body) => {
     return fetch(`${endpoint}/edit/${id}`, {
         method: 'PUT',
@@ -21,43 +38,31 @@ const fetchDeleteTask = (id) => {
     })
 }
 
-const createEl = (tag, text, attrs = {}) => {
-    const el = document.createElement(tag)
-    el.textContent = text
-
-    Object.keys(attrs).forEach((key) => {
-        el.setAttribute(key, attrs[key])
-    })
-    return el
-}
-
-const fetchGetTaskList = () => {
-    return fetch(`${endpoint}/list`)
-        .then(response => response.json())
-}
-
 const endpoint = 'http://localhost:3000'
 
-    const renderTask = (task, list) => {
 
+    const renderTask = (task, list) => {
     const li = createEl('li')
     const text = createEl('div', task.text, { class: task.done ? 'text done' : 'text' })
     const btnWrapper = createEl('div', null, { class: 'btn-wrapper' })
+
     const doneBtnText = !task.done ? 'Сделано' : 'Не сделано'
+
+
     const doneBtn = createEl('button', doneBtnText)
     const editBtn = createEl('button', ' Редактировать')
     const deleteBtn = createEl('button', 'Удалить')
     
-    
     deleteBtn.addEventListener('click', () => {
-    fetchDeleteTask(task.id)
+
+        fetchDeleteTask(task.id)
         .then(() => {
         const list = document.querySelector('#list')
         list.remove()
         renderTaskList()
     })
     })
-    
+
     editBtn.addEventListener('click', () => {
         const input = createEl('input', { class: 'edit-input' })
         input.type = 'text'
@@ -74,8 +79,9 @@ const endpoint = 'http://localhost:3000'
         })
     })
     })
-    
+
     doneBtn.addEventListener('click', () => {
+
     fetchEditTask(task.id, { done: !task.done })
     .then(() => {
         const list = document.querySelector('#list')
@@ -83,7 +89,6 @@ const endpoint = 'http://localhost:3000'
         renderTaskList()
     })
     })
-
     li.appendChild(text)
     li.appendChild(btnWrapper)
     btnWrapper.appendChild(doneBtn)
@@ -92,22 +97,22 @@ const endpoint = 'http://localhost:3000'
     list.appendChild(li)
 }
 
+
 const renderTaskList = () => {
     const list = createEl('ul', null, { id: 'list' })
     document.body.appendChild(list)
-
     fetchGetTaskList()
-    .then(taskList => taskList.forEach((item) => renderTask(item, list)))
+        .then(taskList => taskList.forEach((item) => renderTask(item, list)))
 }
 
 renderTaskList()
-
+ 
 const input = document.querySelector('input[name="todo-text"]')
 const textarea = document.querySelector('textarea[name="todo-description"]')
 const createBtn = document.querySelector('#create')
 
 createBtn.addEventListener('click', () => {
-    fetchAddTask({ text: input.value, textarea: input.value })
+    fetchAddTask({ text: input.value, textarea: input.value }
     .then(() => {
         const list = document.querySelector('#list')
         list.remove()
