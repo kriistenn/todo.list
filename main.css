@@ -5,3 +5,26 @@
 .desc{
     padding: 10px;
 }
+
+.btn {
+    background-color: darksalmon;
+    height: 60px;
+    width: 170px;
+}
+
+body {
+    margin: 0;
+}
+
+form{
+    background-color: gray;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+textarea{
+    margin: 5px 20px;
+}
