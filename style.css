@@ -32,4 +32,6 @@ textarea{
 .error {
     color: darkred;
     text-decoration: none;
+    width: 170px;
+    height: 70px;
 }
