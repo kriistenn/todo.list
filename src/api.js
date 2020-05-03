@@ -2,10 +2,10 @@ export const fetchGetTaskList = () => {
     return fetch(`${endpoint}/list`)
         .then(response => {
         if (!response.ok) throw new Error('Ошибка загрузки')
-        return response.json()
+            return response.json()
+        
         })
 }
-
 export const fetchEditTask = (id, body) => {
     return fetch(`${endpoint}/edit/${id}`, {
         method: 'PUT',
@@ -16,16 +16,15 @@ export const fetchEditTask = (id, body) => {
         if (!response.ok) throw new Error('Ошибка редактирования')
     })
 }
-
 export const fetchDeleteTask = (id) => {
     return fetch(`${endpoint}/delete/${id}`, {
         method: 'DELETE',
     })
+    
     .then(response => {
         if (!response.ok) throw new Error('Ошибка удаления')
     })
 }
-
 export  const fetchAddTask = (body) => {
     return fetch(`${endpoint}/add`, {
         method: 'POST',
@@ -34,7 +33,7 @@ export  const fetchAddTask = (body) => {
     })
     .then(response => {
         if (!response.ok) throw new Error('Ошибка cоздания')
+        console.log(response.json())
     })
 }
 const endpoint = 'http://localhost:3000'
-
