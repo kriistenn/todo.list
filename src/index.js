@@ -26,7 +26,6 @@ fetchDeleteTask(task.id)
     })
 })
 
-
 editBtn.addEventListener('click', (event) => {
     event.preventDefault()
     const input = createEl('input', { class: 'edit-input' })
@@ -37,10 +36,10 @@ editBtn.addEventListener('click', (event) => {
     li.removeChild(text)
 
     input.addEventListener('blur', () => {
-    fetchEditTask(task.id, { text: input.value })
+    fetchEditTask(task.id, {text: input.value})
         .then(() => {
-        document.body.removeChild(list)
-        renderTaskList()
+            document.body.removeChild(list)
+            renderTaskList()
         })
         .catch((err) => {
         errDiv.textContent = err.message
@@ -52,6 +51,9 @@ doneBtn.addEventListener('click', (event) => {
     event.preventDefault()
     fetchEditTask(task.id, { done: !task.done })
     .then(() => {
+        if(input.value.length > 0){
+            
+        }
         document.body.removeChild(list)
         renderTaskList()
     })
@@ -73,6 +75,7 @@ const renderTaskList = () => {
 const list = createEl('ul', null, { id: 'list' })
 document.body.appendChild(list)
 fetchGetTaskList()
+
     .then(taskList => taskList.forEach((item) => renderTask(item, list)))
     .catch((err) => {
     const errDiv = createEl('div', err.message, { class: 'error' })
@@ -88,13 +91,18 @@ const createBtn = document.getElementById('create')
 const createErr = document.getElementById('create-error')
 
 createBtn.addEventListener('click', (event) => {
-event.preventDefault
-const taskList = document.querySelector('#list')
-taskList.remove()
-fetchAddTask({ text: input.value, textarea: input.value })
-.then(() => renderTaskList())
+event.preventDefault()
+
+const taskList = document.querySelector('list')
+
+fetchAddTask({ text: input.value, textarea: textarea.value })
+.then(() => {
+    taskList.remove()
+    renderTaskList()
+})
     .catch((err) => {
     createErr.textContent = err.message
     })
+    
 })
 
