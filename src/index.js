@@ -8,7 +8,6 @@ import {
     createEl
 } from './create'
 
-console.log('grfdkl;sdfgkdf;')
 const renderTask = (task, list) => {
     const li = createEl('li', null)
     const text = createEl('div', task.text, {
