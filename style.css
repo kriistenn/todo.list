@@ -28,3 +28,10 @@ form{
 textarea{
     margin: 5px 20px;
 }
+
+.error {
+    color: darkred;
+    text-decoration: none;
+    width: 170px;
+    height: 70px;
+}
