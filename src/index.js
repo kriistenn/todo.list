@@ -125,6 +125,8 @@ createBtn.addEventListener('click', (event) => {
         .then(() => {
             taskList.remove()
             renderTaskList()
+            if (createErr) createErr.remove()
+
         })
         .catch((err) => {
             createErr.textContent = err.message
